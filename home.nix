@@ -22,6 +22,7 @@
   # environment.
   home.packages = [
     pkgs.nerd-fonts.fira-code
+    pkgs.nixfmt
     # # You can also create simple shell scripts directly inside your
     # # configuration:
     # (pkgs.writeShellScriptBin "my-hello" ''
@@ -63,11 +64,6 @@
 
   programs.chromium = {
     enable = true;
-  };
-  programs.docker-cli = {
-    enable = true;
-    # settings = {};
-    # configDir = 
   };
   programs.jq = {
     enable = true;
