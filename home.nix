@@ -112,7 +112,7 @@
             "1password"
             "command-not-found"
             "direnv"
-            "docker"
+            # "docker"
             "docker-compose"
             "extract"
             "fancy-ctrl-z"
