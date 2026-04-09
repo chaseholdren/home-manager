@@ -3,8 +3,10 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "c6-dev";
-  home.homeDirectory = "/home/c6-dev";
+  home.username = "chase";
+  home.homeDirectory = "/home/chase";
+  home.shell.enableZshIntegration = true;
+  home.shell.enableBashIntegration = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -22,7 +24,7 @@
   # environment.
   home.packages = [
     pkgs.nerd-fonts.fira-code
-    pkgs.nixfmt
+    pkgs.nixfmt    
     # # You can also create simple shell scripts directly inside your
     # # configuration:
     # (pkgs.writeShellScriptBin "my-hello" ''
@@ -38,9 +40,9 @@
     # ".screenrc".source = dotfiles/screenrc;
 
     # # You can also set the file content immediately.
-    ".config/turborepo/telemetry.json".text = ''
-      { "telemetry_enabled": false }
-    '';
+    # ".config/turborepo/telemetry.json".text = ''
+    #   { "telemetry_enabled": false }
+    # '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -57,11 +59,22 @@
     frequency = "weekly";
 
   };
-  targets.genericLinux.enable = true;
+  targets.genericLinux = {
+      enable = true;
+      gpu.enable = true;
+  };
   xdg.enable = true;
   # https://nix-community.github.io/home-manager/options.xhtml
   home.shell.enableShellIntegration = true;
-
+  programs.direnv = {
+      enable = true;
+      config = {
+          load_dotenv = true;
+          strict_env = true;
+      };
+      nix-direnv.enable = true;
+      enableZshIntegration = true;
+  };
   programs.chromium = {
     enable = true;
   };
@@ -78,13 +91,44 @@
   programs.command-not-found = {
     enable = true;
   };
+  programs.fd = {
+      enable = true;
+  };
+  programs.fzf = {
+      enable = true;
+  };
+  programs.man = {
+      enable = true;
+  };
   # https://searchix.ovh/options/home-manager/search
 
   programs.fresh-editor.enable = true;
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
-    oh-my-zsh.enable = true;
+    oh-my-zsh = {
+        enable = true;
+        plugins = [
+            "1password"
+            "command-not-found"
+            "direnv"
+            "docker"
+            "docker-compose"
+            "extract"
+            "fancy-ctrl-z"
+            "fzf"
+            "gcloud"
+            "gh"
+            "git"
+            "git-prompt"
+            "npm"
+            "shrink-path"
+            "starship"
+            "ubuntu"
+            "vscode"
+            
+        ];
+    };
     autocd = true;
     autosuggestion = {
       enable = true;
@@ -151,7 +195,13 @@
       enable = true;
     };
     settings = {
-
+      user = {
+        email = "chaseholdren@users.noreply.github.com";
+        name = "Chase Holdren";
+      };
+      init = {
+        defaultBranch = "main";
+      };
     };
   };
 
