@@ -24,7 +24,8 @@
   # environment.
   home.packages = [
     pkgs.nerd-fonts.fira-code
-    pkgs.nixfmt    
+    pkgs.nixfmt
+    pkgs.killport    
     # # You can also create simple shell scripts directly inside your
     # # configuration:
     # (pkgs.writeShellScriptBin "my-hello" ''
