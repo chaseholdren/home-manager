@@ -41,9 +41,46 @@
     # ".screenrc".source = dotfiles/screenrc;
 
     # # You can also set the file content immediately.
-    # ".config/turborepo/telemetry.json".text = ''
-    #   { "telemetry_enabled": false }
-    # '';
+    ".config/turborepo/telemetry.json".text = ''
+      { "telemetry_enabled": false }
+    '';
+    
+    ".gemini/settings.json".text = ''
+        {
+          "general": {
+            "defaultApprovalMode": "auto_edit",
+            "plan": {
+              "directory": "./plans"
+            }
+          },
+          "ui": {
+            "inlineThinkingMode": "full",
+            "hideBanner": true
+          },
+          "ide": {
+            "enabled": true
+          },
+          "context": {
+            "fileFiltering": {
+              "respectGitIgnore": false
+            }
+          },
+          "tools": {
+            "shell": {
+              "showColor": true
+            }
+          },
+          "experimental": {
+            "modelSteering": true,
+            "directWebFetch": true,
+            "memoryManager": true,
+            "topicUpdateNarration": true
+          },
+          "model": {
+            "name": "gemini-3.1-pro-preview"
+          }
+        }
+    '';
   };
 
   # Home Manager can also manage your environment variables through
