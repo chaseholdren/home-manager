@@ -149,8 +149,8 @@
       }
     '';
     shellAliases = {
-    hme = "home-manager edit";
-    ".." = "cd ..";
+      hme = "home-manager edit";
+      ".." = "cd ..";
     };
     dotDir = "${config.xdg.configHome}/zsh";
     oh-my-zsh = {
