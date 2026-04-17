@@ -102,10 +102,8 @@
   programs.direnv = {
       enable = true;
       config = {
-          load_dotenv = true;
           strict_env = true;
       };
-      nix-direnv.enable = true;
       enableZshIntegration = true;
   };
   programs.chromium = {
@@ -139,7 +137,7 @@
   programs.fresh-editor.enable = true;
   programs.zsh = {
     enable = true;
-    initExtra = ''
+    initContent = ''
       function hms() {
         local config_dir="$HOME/.config/home-manager"
         if [ -d "$config_dir" ]; then
@@ -174,8 +172,9 @@
         plugins = [
             "1password"
             "command-not-found"
+            "bun"
             "direnv"
-            # "docker"
+            "docker"
             "docker-compose"
             "extract"
             "fancy-ctrl-z"
@@ -186,6 +185,9 @@
             "git-prompt"
             "mise"
             "npm"
+            "node"
+            "tailscale"
+            "zsh-interactive-cd"
             "shrink-path"
             "starship"
             "ubuntu"
@@ -236,7 +238,7 @@
       size = 50000;
       save = 50000;
       # These will create many disabled options
-      append = true;
+      append = false;
       ignoreDups = false;
       ignoreAllDups = true;
       saveNoDups = true;
@@ -244,7 +246,7 @@
       ignoreSpace = false;
       expireDuplicatesFirst = false;
       extended = true;
-      share = false;
+      share = true;
     };
   };
   
