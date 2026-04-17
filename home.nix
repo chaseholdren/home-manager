@@ -40,41 +40,20 @@
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
     
-    ".gemini/settings.json".text = ''
-        {
-          "general": {
-            "defaultApprovalMode": "auto_edit",
-            "plan": {
-              "directory": "./plans"
-            }
-          },
-          "ui": {
-            "inlineThinkingMode": "full",
-            "hideBanner": true
-          },
-          "ide": {
-            "enabled": true
-          },
-          "context": {
-            "fileFiltering": {
-              "respectGitIgnore": false
-            }
-          },
-          "tools": {
-            "shell": {
-              "showColor": true
-            }
-          },
-          "experimental": {
-            "modelSteering": true,
-            "directWebFetch": true,
-            "memoryManager": true,
-            "topicUpdateNarration": true
-          },
-          "model": {
-            "name": "gemini-3.1-pro-preview"
-          }
+    ".config/fresh/config.json".text = ''
+    {
+        "file_explorer": {
+          "show_hidden": true,
+          "show_gitignored": true
+        },
+        "theme": "high-contrast",
+        "editor": {
+          "tab_size": 2
+        },
+        "file_browser": {
+          "show_hidden": true
         }
+      }
     '';
   };
 
@@ -281,30 +260,41 @@
 
   programs.gemini-cli.enable = true;
   programs.gemini-cli.settings = {
-  security = {
-    auth = {
-      selectedType = "oauth-personal";
-    };
-    ui = {
-      inlineThinkingMode = "full";
-      hideBanner = true;
-    };
-    model = {
-      name = "gemini-3.1-pro-preview";
-    };
-    context = {
-      fileFiltering = {
-        respectGitIgnore = false;
-      };
-    };
-    advanced = {
-      autoConfigureMemory = true;
-    };
-    experimental = {
-      modelSteering = true;
-      directWebFetch = true;
-      topicUpdateNarration = true;
-    };
+      security = {
+        auth = {
+          selectedType = "oauth-personal";
+        };
+        general = {
+          defaultApprovalMode = "auto_edit";
+          plan = {
+            directory = "./plans";
+          };
+        };
+        ui = {
+          inlineThinkingMode = "full";
+          hideBanner = true;
+        };
+        model = {
+          name = "gemini-3.1-pro-preview";
+        };
+        context = {
+          fileFiltering = {
+            respectGitIgnore = false;
+          };
+        };
+        advanced = {
+          autoConfigureMemory = true;
+        };
+        ide = {
+          enabled = true;
+        };
+        experimental = {
+          modelSteering = true;
+          directWebFetch = true;
+          topicUpdateNarration = true;
+          memoryManager = true;
+        };
   };
+  
 };
 }
