@@ -25,7 +25,7 @@
   home.packages = [
     pkgs.nerd-fonts.fira-code
     pkgs.nixfmt
-    pkgs.killport    
+    pkgs.killport
     # # You can also create simple shell scripts directly inside your
     # # configuration:
     # (pkgs.writeShellScriptBin "my-hello" ''
@@ -39,21 +39,21 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-    
+
     ".config/fresh/config.json".text = ''
-    {
-        "file_explorer": {
-          "show_hidden": true,
-          "show_gitignored": true
-        },
-        "theme": "high-contrast",
-        "editor": {
-          "tab_size": 2
-        },
-        "file_browser": {
-          "show_hidden": true
+      {
+          "file_explorer": {
+            "show_hidden": true,
+            "show_gitignored": true
+          },
+          "theme": "high-contrast",
+          "editor": {
+            "tab_size": 2
+          },
+          "file_browser": {
+            "show_hidden": true
+          }
         }
-      }
     '';
   };
 
@@ -72,18 +72,19 @@
 
   };
   targets.genericLinux = {
-      enable = true;
-      gpu.enable = true;
+    enable = true;
+    gpu.enable = true;
   };
   xdg.enable = true;
   # https://nix-community.github.io/home-manager/options.xhtml
   home.shell.enableShellIntegration = true;
   programs.direnv = {
-      enable = true;
-      config = {
-          strict_env = true;
-      };
-      enableZshIntegration = true;
+    enable = true;
+    config = {
+      strict_env = true;
+    };
+    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
   programs.chromium = {
     enable = true;
@@ -102,13 +103,13 @@
     enable = true;
   };
   programs.fd = {
-      enable = true;
+    enable = true;
   };
   programs.fzf = {
-      enable = true;
+    enable = true;
   };
   programs.man = {
-      enable = true;
+    enable = true;
   };
   programs.gcc.enable = true;
   # https://searchix.ovh/options/home-manager/search
@@ -121,6 +122,8 @@
         local config_dir="$HOME/.config/home-manager"
         if [ -d "$config_dir" ]; then
           pushd "$config_dir" > /dev/null
+          
+          nixfmt flake.nix home.nix
           
           # Stage changes so the Flake can see them
           git add .
@@ -145,34 +148,38 @@
         fi
       }
     '';
+    shellAliases = {
+    hme = "home-manager edit";
+    ".." = "cd ..";
+    };
     dotDir = "${config.xdg.configHome}/zsh";
     oh-my-zsh = {
-        enable = true;
-        plugins = [
-            "1password"
-            "command-not-found"
-            "bun"
-            "direnv"
-            "docker"
-            "docker-compose"
-            "extract"
-            "fancy-ctrl-z"
-            "fzf"
-            "gcloud"
-            "gh"
-            "git"
-            "git-prompt"
-            "mise"
-            "npm"
-            "node"
-            "tailscale"
-            "zsh-interactive-cd"
-            "shrink-path"
-            "starship"
-            "ubuntu"
-            "vscode"
-            
-        ];
+      enable = true;
+      plugins = [
+        "1password"
+        "command-not-found"
+        "bun"
+        "direnv"
+        "docker"
+        "docker-compose"
+        "extract"
+        "fancy-ctrl-z"
+        "fzf"
+        "gcloud"
+        "gh"
+        "git"
+        "git-prompt"
+        "mise"
+        "npm"
+        "node"
+        "tailscale"
+        "zsh-interactive-cd"
+        "shrink-path"
+        "starship"
+        "ubuntu"
+        "vscode"
+
+      ];
     };
     autocd = true;
     autosuggestion = {
@@ -190,7 +197,7 @@
     syntaxHighlighting = {
       enable = true;
     };
-    
+
     setOptions = [
       "AUTO_LIST"
       "AUTO_PARAM_SLASH"
@@ -228,18 +235,18 @@
       share = true;
     };
   };
-  
+
   programs.mise = {
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
   };
-  
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
   };
-  
+
   programs.git = {
     enable = true;
     lfs = {
@@ -260,41 +267,41 @@
 
   programs.gemini-cli.enable = true;
   programs.gemini-cli.settings = {
-      security = {
-        auth = {
-          selectedType = "oauth-personal";
+    security = {
+      auth = {
+        selectedType = "oauth-personal";
+      };
+      general = {
+        defaultApprovalMode = "auto_edit";
+        plan = {
+          directory = "./plans";
         };
-        general = {
-          defaultApprovalMode = "auto_edit";
-          plan = {
-            directory = "./plans";
-          };
+      };
+      ui = {
+        inlineThinkingMode = "full";
+        hideBanner = true;
+      };
+      model = {
+        name = "gemini-3.1-pro-preview";
+      };
+      context = {
+        fileFiltering = {
+          respectGitIgnore = false;
         };
-        ui = {
-          inlineThinkingMode = "full";
-          hideBanner = true;
-        };
-        model = {
-          name = "gemini-3.1-pro-preview";
-        };
-        context = {
-          fileFiltering = {
-            respectGitIgnore = false;
-          };
-        };
-        advanced = {
-          autoConfigureMemory = true;
-        };
-        ide = {
-          enabled = true;
-        };
-        experimental = {
-          modelSteering = true;
-          directWebFetch = true;
-          topicUpdateNarration = true;
-          memoryManager = true;
-        };
+      };
+      advanced = {
+        autoConfigureMemory = true;
+      };
+      ide = {
+        enabled = true;
+      };
+      experimental = {
+        modelSteering = true;
+        directWebFetch = true;
+        topicUpdateNarration = true;
+        memoryManager = true;
+      };
+    };
+
   };
-  
-};
 }
