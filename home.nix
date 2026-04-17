@@ -39,11 +39,6 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    ".config/turborepo/telemetry.json".text = ''
-      { "telemetry_enabled": false }
-    '';
     
     ".gemini/settings.json".text = ''
         {
@@ -138,11 +133,41 @@
   programs.man = {
       enable = true;
   };
+  programs.gcc.enable = true;
   # https://searchix.ovh/options/home-manager/search
 
   programs.fresh-editor.enable = true;
   programs.zsh = {
     enable = true;
+    initExtra = ''
+      function hms() {
+        local config_dir="$HOME/.config/home-manager"
+        if [ -d "$config_dir" ]; then
+          pushd "$config_dir" > /dev/null
+          
+          # Stage changes so the Flake can see them
+          git add .
+          
+          # Run the switch using nh
+          if nh home switch; then
+            # If switch was successful, commit and push if there are changes
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: update configuration $(date +%F)"
+              git push
+            else
+              echo "No changes to commit."
+            fi
+          else
+            echo "Switch failed, skipping commit/push."
+          fi
+          
+          popd > /dev/null
+        else
+          echo "Error: $config_dir not found."
+          return 1
+        fi
+      }
+    '';
     dotDir = "${config.xdg.configHome}/zsh";
     oh-my-zsh = {
         enable = true;
