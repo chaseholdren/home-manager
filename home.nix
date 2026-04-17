@@ -159,6 +159,7 @@
             "gh"
             "git"
             "git-prompt"
+            "mise"
             "npm"
             "shrink-path"
             "starship"
@@ -220,6 +221,12 @@
       extended = true;
       share = false;
     };
+  };
+  
+  programs.mise = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
   };
   
   programs.starship = {
