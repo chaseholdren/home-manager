@@ -26,8 +26,6 @@
     pkgs.nerd-fonts.fira-code
     pkgs.nixfmt
     pkgs.killport
-    pkgs.tailscale
-    pkgs.tailscalesd
     # # You can also create simple shell scripts directly inside your
     # # configuration:
     # (pkgs.writeShellScriptBin "my-hello" ''
