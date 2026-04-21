@@ -149,7 +149,7 @@
       }
 
       eval "$(mise activate zsh)"
-      eval "$(pitchfork activate zsh)"
+      eval "$(pitchfork activate zsh)" | true
     '';
     shellAliases = {
       hme = "home-manager edit";
