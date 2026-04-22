@@ -69,12 +69,13 @@
     enable = true;
     useFlake = true;
     frequency = "weekly";
-
   };
+
   targets.genericLinux = {
     enable = true;
     gpu.enable = true;
   };
+
   xdg.enable = true;
   # https://nix-community.github.io/home-manager/options.xhtml
   home.shell.enableShellIntegration = true;
@@ -148,7 +149,6 @@
         fi
       }
 
-      eval "$(mise activate zsh)"
       eval "$(pitchfork activate zsh)" | true
     '';
     shellAliases = {
