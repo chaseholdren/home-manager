@@ -40,6 +40,15 @@
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
 
+    ".config/pitchfork/config.toml".text = ''
+      [settings.general]
+      mise = true
+      mise_bin = "~/.nix-profile/bin/mise"
+
+      [settings.web]
+      auto_start = true
+    '';
+
     ".config/fresh/config.json".text = ''
       {
           "file_explorer": {
