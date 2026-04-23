@@ -43,7 +43,7 @@
     ".config/pitchfork/config.toml".text = ''
       [settings.general]
       mise = true
-      mise_bin = "~/.nix-profile/bin/mise"
+      mise_bin = "/home/chase/.nix-profile/bin/mise"
 
       [settings.web]
       auto_start = true
