@@ -28,9 +28,6 @@
     pkgs.killport
     # # You can also create simple shell scripts directly inside your
     # # configuration:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
     (pkgs.writeShellScriptBin "home-manager-commit" ''
       function home-manager-commit() {
         local config_dir="$HOME/.config/home-manager"
