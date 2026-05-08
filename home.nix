@@ -32,34 +32,38 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
     (pkgs.writeShellScriptBin "home-manager-commit" ''
-      local config_dir="$HOME/.config/home-manager"
-      if [ -d "$config_dir" ]; then
-        pushd "$config_dir" > /dev/null
-        
-        nixfmt flake.nix home.nix
-        
-        # Stage changes so the Flake can see them
-        git add .
-        git commit -m "chore: update configuration $(date +%F)"
-        
-        # Run the switch using nh
-        if nh home switch; then
-          # If switch was successful, commit and push if there are changes
-          if ! git --no-pager log @{upstream}.. --pretty=oneline; then
-            git push
+      function home-manager-commit() {
+        local config_dir="$HOME/.config/home-manager"
+        if [ -d "$config_dir" ]; then
+          pushd "$config_dir" > /dev/null
+          
+          nixfmt flake.nix home.nix
+          
+          # Stage changes so the Flake can see them
+          git add .
+          git commit -m "chore: update configuration $(date +%F)"
+          
+          # Run the switch using nh
+          if nh home switch; then
+            # If switch was successful, commit and push if there are changes
+            if ! git --no-pager log @{upstream}.. --pretty=oneline; then
+              git push
+            else
+              echo "No changes to commit."
+            fi
           else
-            echo "No changes to commit."
+            git reset HEAD~1 --soft
+            echo "Switch failed, resetting commit."
           fi
+          
+          popd > /dev/null
         else
-          git reset HEAD~1 --soft
-          echo "Switch failed, resetting commit."
+          echo "Error: $config_dir not found."
+          return 1
         fi
-        
-        popd > /dev/null
-      else
-        echo "Error: $config_dir not found."
-        return 1
-      fi
+      }
+
+      home-manager-commit
     '')
   ];
 
