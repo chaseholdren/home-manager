@@ -43,7 +43,7 @@
           # Run the switch using nh
           if nh home switch; then
             # If switch was successful, commit and push if there are changes
-            if ! git --no-pager log @{upstream}.. --pretty=oneline; then
+            if git --no-pager log @{upstream}.. --pretty=oneline; then
               git push
             else
               echo "No changes to commit."
