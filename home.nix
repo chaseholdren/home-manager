@@ -80,6 +80,8 @@
     frequency = "weekly";
   };
 
+  services.home-manager.autoUpgrade.preSwitchCommands = [ ];
+
   targets.genericLinux = {
     enable = true;
     gpu.enable = true;
@@ -128,7 +130,7 @@
   programs.zsh = {
     enable = true;
     initContent = ''
-      function hms() {
+      function home-manager-commit() {
         local config_dir="$HOME/.config/home-manager"
         if [ -d "$config_dir" ]; then
           pushd "$config_dir" > /dev/null
@@ -162,6 +164,7 @@
     '';
     shellAliases = {
       hme = "home-manager edit";
+      hmc = "home-manager-commit";
       ".." = "cd ..";
     };
     dotDir = "${config.xdg.configHome}/zsh";
