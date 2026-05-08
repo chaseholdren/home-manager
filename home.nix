@@ -31,6 +31,36 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    (pkgs.writeShellScriptBin "home-manager-commit" ''
+      local config_dir="$HOME/.config/home-manager"
+      if [ -d "$config_dir" ]; then
+        pushd "$config_dir" > /dev/null
+        
+        nixfmt flake.nix home.nix
+        
+        # Stage changes so the Flake can see them
+        git add .
+        git commit -m "chore: update configuration $(date +%F)"
+        
+        # Run the switch using nh
+        if nh home switch; then
+          # If switch was successful, commit and push if there are changes
+          if ! git --no-pager log @{upstream}.. --pretty=oneline; then
+            git push
+          else
+            echo "No changes to commit."
+          fi
+        else
+          git reset HEAD~1 --soft
+          echo "Switch failed, resetting commit."
+        fi
+        
+        popd > /dev/null
+      else
+        echo "Error: $config_dir not found."
+        return 1
+      fi
+    '')
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage plain files is through 'home.file'.
@@ -130,41 +160,12 @@
   programs.zsh = {
     enable = true;
     initContent = ''
-      function home-manager-commit() {
-        local config_dir="$HOME/.config/home-manager"
-        if [ -d "$config_dir" ]; then
-          pushd "$config_dir" > /dev/null
-          
-          nixfmt flake.nix home.nix
-          
-          # Stage changes so the Flake can see them
-          git add .
-          
-          # Run the switch using nh
-          if nh home switch; then
-            # If switch was successful, commit and push if there are changes
-            if ! git diff --cached --quiet; then
-              git commit -m "chore: update configuration $(date +%F)"
-              git push
-            else
-              echo "No changes to commit."
-            fi
-          else
-            echo "Switch failed, skipping commit/push."
-          fi
-          
-          popd > /dev/null
-        else
-          echo "Error: $config_dir not found."
-          return 1
-        fi
-      }
-
       eval "$(pitchfork activate zsh)" | true
     '';
     shellAliases = {
       hme = "home-manager edit";
       hmc = "home-manager-commit";
+      cdhm = "cd ~/.config/home-manager";
       ".." = "cd ..";
     };
     dotDir = "${config.xdg.configHome}/zsh";
