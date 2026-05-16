@@ -163,6 +163,9 @@
     initContent = ''
       eval "$(pitchfork activate zsh)" | true
     '';
+    envExtra = ''
+      eval $(mise activate zsh --shims)
+    '';
     shellAliases = {
       hme = "home-manager edit";
       hmc = "home-manager-commit";
