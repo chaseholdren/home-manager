@@ -95,6 +95,13 @@
           }
         }
     '';
+
+    ".config/mise/config.toml".text = ''
+      [tools]
+      1password = "latest"
+      pitchfork = "latest"
+      watchexec = "latest"
+    '';
   };
 
   # Home Manager can also manage your environment variables through
