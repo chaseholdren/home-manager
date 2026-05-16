@@ -166,6 +166,9 @@
     envExtra = ''
       eval $(mise activate zsh --shims)
     '';
+    loginExtra = ''
+      eval $(mise activate zsh --shims)
+    '';
     shellAliases = {
       hme = "home-manager edit";
       hmc = "home-manager-commit";
