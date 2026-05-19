@@ -41,7 +41,7 @@
           git commit -m "chore: update configuration $(date +%F)"
           
           # Run the switch using nh
-          if nh home switch; then
+          if home-manager switch -b backup; then
             # If switch was successful, commit and push if there are changes
             if ! git --no-pager log @{upstream}.. --pretty=oneline; then
               git push
@@ -101,6 +101,8 @@
       1password = "latest"
       pitchfork = "latest"
       watchexec = "latest"
+      bun = "latest"
+      usage = "latest"
     '';
   };
 
